@@ -4,7 +4,7 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 function puts(error, stdout, stderr) { sys.puts(stdout) }
 function start(dir) {
-    dir
+    
     exec("/usr/local/bin/gpio write 4 "+dir, puts);
     exec("/usr/local/bin/gpio -g pwm 18 10", puts);
 }
