@@ -13,6 +13,7 @@ function stop() {
 
 app.get('/', function (req, res) {
     res.send('command: ' + req.query.command);
+    res.send('dir: ' + req.query.dir);
     switch (req.query.command) {
         case "start":
             start();
