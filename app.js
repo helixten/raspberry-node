@@ -18,7 +18,7 @@ function stop() {
     exec("/usr/local/bin/gpio -g pwm 18 0", puts);
 }
 
-
+app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res){
 
    res.sendfile( 'index.html');
