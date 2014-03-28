@@ -9,14 +9,14 @@ $scope.image = 'http://www.lawrence.io/ct/image.png';
 
 
 $scope.stop = function(){
-        var url = 'start';
+        var url = 'stop';
 
         $scope.runPost(url);
 
     };
 
 $scope.start = function(){
-        var url = 'stop';
+        var url = 'start';
 
         $scope.runPost(url);
 
