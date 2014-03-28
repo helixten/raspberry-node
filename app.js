@@ -27,10 +27,13 @@ app.get('/', function(req, res){
 
 app.get('/start', function (req, res) {
     start();
+     res.send('start');
+
 });
 
 app.get('/stop', function (req, res) {
     stop();
+    res.send('stop');
 });
 
 
