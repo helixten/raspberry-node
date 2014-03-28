@@ -1,4 +1,4 @@
-var app = angular.module('app', [])
+var app = angular.module('app', ['ui.bootstrap'])
 app.controller('DataCtrl', function ($scope,  $http) {
 $scope.image = 'http://www.lawrence.io/ct/image.jpg';
   setInterval(function() {
@@ -23,6 +23,26 @@ $scope.start = function(){
     };
 
 
+      $scope.alerts = [
+
+  ];
+
+  $scope.addAlert = function(message) {
+    $scope.alerts.push({msg: message,type: 'success'});
+  };
+
+
+
+     socket.on("notice", function (post) {
+       $scope.addAlert(post)
+
+  });
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
+
     $scope.runPost = function(url){
 
             $http({
@@ -32,7 +52,7 @@ $scope.start = function(){
         }).
         success(function (data, status, headers, config) {
 
-            console.log(headers())
+      //      console.log(headers())
 
 
         }).
