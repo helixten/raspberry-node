@@ -39,7 +39,7 @@ var img = document.querySelector('#screenshot');
       // "image/webp" works in Chrome.
       // Other browsers will fall back to image/png.
 
-      var imgData= canvas.toDataURL('image/png')
+      var imgData= canvas.toDataURL('image/jpeg', 0.1)
       document.querySelector('img').src = imgData;
 
        $.ajax({
@@ -58,14 +58,6 @@ var img = document.querySelector('#screenshot');
 
 
 
-
-  setInterval(function(){
-if (localMediaStream) {
- snapshot();
- return;
-}
-},3000);
-
 function sizeCanvas() {
   // video.onloadedmetadata not firing in Chrome so we have to hack.
   // See crbug.com/110938.
@@ -75,6 +67,16 @@ function sizeCanvas() {
     img.height = video.videoHeight;
     img.width = video.videoWidth;
   }, 100);
+
+
+
+
+    setInterval(function(){
+  if (localMediaStream) {
+   snapshot();
+   return;
+  }
+},1000);
 }
 
   if (navigator.getUserMedia) {

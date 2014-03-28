@@ -1,11 +1,11 @@
 var app = angular.module('app', [])
 app.controller('DataCtrl', function ($scope,  $http) {
-$scope.image = 'http://www.lawrence.io/ct/image.png';
+$scope.image = 'http://www.lawrence.io/ct/image.jpg';
   setInterval(function() {
 
-    $scope.image = 'http://www.lawrence.io/ct/image.png?rand=' + Math.random();
+    $scope.image = 'http://www.lawrence.io/ct/image.jpg?rand=' + Math.random();
     $scope.$apply();
-}, 3000);
+}, 1500);
 
 
 $scope.stop = function(){
